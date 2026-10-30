@@ -31,10 +31,64 @@ export function TechBackground() {
       radius: 140,
     };
 
+    const particles: Particle[] = [];
+
+    const createParticle = (x?: number, y?: number): Particle => ({
+      x: x ?? Math.random() * width,
+      y: y ?? Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.6,
+      vy: (Math.random() - 0.5) * 0.6,
+      size: Math.random() * 1.8 + 0.8,
+      alpha: Math.random() * 0.5 + 0.2,
+    });
+
+    const initParticles = () => {
+      const targetCount = Math.min(Math.floor((width * height) / 18000), 75);
+      particles.length = 0;
+      for (let i = 0; i < targetCount; i++) {
+        particles.push(createParticle());
+      }
+    };
+
+    initParticles();
+
     const handleResize = () => {
       if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+
+      if (newWidth === width && newHeight === height) return;
+
+      const oldWidth = width;
+      const oldHeight = height;
+
+      width = canvas.width = newWidth;
+      height = canvas.height = newHeight;
+
+      // Proportional redistribution of existing particles
+      if (oldWidth > 0 && oldHeight > 0) {
+        const scaleX = newWidth / oldWidth;
+        const scaleY = newHeight / oldHeight;
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x *= scaleX;
+          p.y *= scaleY;
+
+          // If somehow out of bounds, re-scatter across the full viewport
+          if (p.x < 0 || p.x > newWidth) p.x = Math.random() * newWidth;
+          if (p.y < 0 || p.y > newHeight) p.y = Math.random() * newHeight;
+        }
+      }
+
+      // Adjust particle count to match new screen density
+      const targetCount = Math.min(Math.floor((newWidth * newHeight) / 18000), 75);
+      while (particles.length < targetCount) {
+        particles.push(createParticle());
+      }
+      if (particles.length > targetCount) {
+        particles.length = targetCount;
+      }
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -51,20 +105,10 @@ export function TechBackground() {
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
 
-    // Initialize particles
-    const particleCount = Math.min(Math.floor((width * height) / 18000), 75);
-    const particles: Particle[] = [];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        size: Math.random() * 1.8 + 0.8,
-        alpha: Math.random() * 0.5 + 0.2,
-      });
-    }
+    const resizeObserver = new ResizeObserver(() => {
+      handleResize();
+    });
+    resizeObserver.observe(document.body);
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -93,6 +137,7 @@ export function TechBackground() {
         p.x += p.vx;
         p.y += p.vy;
 
+        // Wrap particles around borders
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
@@ -140,6 +185,7 @@ export function TechBackground() {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      resizeObserver.disconnect();
     };
   }, []);
 

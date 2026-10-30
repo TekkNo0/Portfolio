@@ -84,9 +84,9 @@ export const siteContent: Record<Language, SiteContent> = {
     socials: [
       {
         name: "GitHub",
-        url: "https://github.com/",
+        url: "https://github.com/TekkNo0",
         icon: "github",
-        handle: "@MaximoMonardez",
+        handle: "@TekkNo0",
       },
       {
         name: "LinkedIn",
@@ -95,10 +95,10 @@ export const siteContent: Record<Language, SiteContent> = {
         handle: "in/maximomonardez",
       },
       {
-        name: "Telegram / Email",
-        url: "mailto:contacto@maximomonardez.com",
+        name: "Gmail",
+        url: "mailto:maximonardezz@gmail.com",
         icon: "mail",
-        handle: "contacto@maximomonardez.com",
+        handle: "maximonardezz@gmail.com",
       },
     ],
   },
@@ -185,9 +185,9 @@ export const siteContent: Record<Language, SiteContent> = {
     socials: [
       {
         name: "GitHub",
-        url: "https://github.com/",
+        url: "https://github.com/TekkNo0",
         icon: "github",
-        handle: "@MaximoMonardez",
+        handle: "@TekkNo0",
       },
       {
         name: "LinkedIn",
@@ -196,10 +196,10 @@ export const siteContent: Record<Language, SiteContent> = {
         handle: "in/maximomonardez",
       },
       {
-        name: "Telegram / Email",
-        url: "mailto:contacto@maximomonardez.com",
+        name: "Gmail",
+        url: "mailto:maximonardezz@gmail.com",
         icon: "mail",
-        handle: "contacto@maximomonardez.com",
+        handle: "maximonardezz@gmail.com",
       },
     ],
   },
