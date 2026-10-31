@@ -97,9 +97,9 @@ export const siteContent: Record<Language, SiteContent> = {
       },
       {
         name: "LinkedIn",
-        url: "https://linkedin.com/",
+        url: "https://www.linkedin.com/in/maximo-monardez-395588302/",
         icon: "linkedin",
-        handle: "in/maximomonardez",
+        handle: "in/maximo-monardez",
       },
       {
         name: "Gmail",
@@ -205,9 +205,9 @@ export const siteContent: Record<Language, SiteContent> = {
       },
       {
         name: "LinkedIn",
-        url: "https://linkedin.com/",
+        url: "https://www.linkedin.com/in/maximo-monardez-395588302/",
         icon: "linkedin",
-        handle: "in/maximomonardez",
+        handle: "in/maximo-monardez",
       },
       {
         name: "Gmail",
